@@ -1,24 +1,22 @@
-import logo from './logo.svg';
+
 import './App.css';
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import "./components/Styles.css"
+import Rooms from './components/Rooms';
+import Home from './components/Home';
+import Room from './components/Room';
+import ReservedRooms from './components/ReservedRooms';
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+   <BrowserRouter>
+   <Routes>
+    <Route exact path="/" element={<Home/>}></Route>
+    <Route exact path="/rooms" element={<Rooms/>}></Route>
+    <Route exact path='/room/:id'  element={<Room/>}/>
+    <Route axact path='cart' element={<ReservedRooms/>}></Route>
+   </Routes>
+   </BrowserRouter>
   );
 }
 
