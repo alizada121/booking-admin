@@ -8,46 +8,24 @@ import { useDispatch } from "react-redux";
 import { AddStartDate } from "../redux/cartSystem";
 import { AddEndDate } from "../redux/cartSystem";
 import { useSelector } from "react-redux";
+import axios from "axios";
 
-function DateRangeComp() {
+function DateRangeComp(props) {
   const { startDate } = useSelector((item) => item.hot);
   const { endDate } = useSelector((item) => item.hot);
+  
+
   const [open, setOpen] = useState(false);
   const [start, setStart] = useState([]);
   const [end, setEnd] = useState([]);
   const dispatch = useDispatch();
-  const [date1,setDate1]=useState()
-  const [date2,setDate2]=useState()
 
-
-  // var dateObject = new Date(startDate);
-
-  useEffect(() => {
-    if(startDate){
-     setDate1(new Date())
-     setDate2(new Date())
-
-     
-      
-    }else{
-      setDate1( new Date(startDate))
-      setDate2(new Date(endDate))
-    }
-  }, [startDate])
-
-  console.log(startDate);
-  console.log(date1);
-  
-  // console.log(dateObject);
-
-
- 
-
-
+  console.log(start)
+  console.log(end)
   const [range, setRange] = useState([
     {
       startDate:new Date(),
-      endDate: addDays(new Date(), 7),
+      endDate:  addDays(new Date(),7),
       key: "selection",
     },
   ]);
@@ -56,24 +34,39 @@ function DateRangeComp() {
 
   localStorage.setItem("start", JSON.stringify(startDate));
   localStorage.setItem("end", JSON.stringify(endDate));
+  let dateObject1
+  let dateObject2
+  
 
   useEffect(() => {
-    let start = JSON.parse(localStorage.getItem("startDate"));
-    let end = JSON.parse(localStorage.getItem("endDate"));
+    let start = JSON.parse(localStorage.getItem("start"));
+    let end = JSON.parse(localStorage.getItem("end"));
 
     if (start) {
       setStart(start);
+     var dateObject1 = new Date(start);
+   
+
+      
     }
 
     if (end) {
       setEnd(end);
+      var dateObject2 = new Date(end);
+      console.log(dateObject2)
     }
+
+   
   }, []);
 
+
   const selectDate = () => {
+
+
     setOpen(false);
     dispatch(AddStartDate(`${format(range[0].startDate, "MM/dd/yyyy")}`));
     dispatch(AddEndDate(`${format(range[0].endDate, "MM/dd/yyyy")}`));
+
   };
 
  
@@ -91,8 +84,8 @@ function DateRangeComp() {
           editableDateInputs={true}
           moveRangeOnFirstSelection={false}
           ranges={range}
-          months={2}
-          direction="horizontal"
+          months={1}
+          direction="vertical"
           className="calendarElement"
         />
       )}
